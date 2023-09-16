@@ -21,6 +21,10 @@ public class GameController : MonoBehaviour
     // Pipe prefab
     public GameObject pipePrefab;
 
+    [SerializeField]
+    private Cursor cursor;
+    private int[] selectedObjectCoordinates = null;
+
     void Awake() {
         game = LevelManager.LoadLevel(currentLevel);
         SpriteManager.LoadSprites();
@@ -41,10 +45,10 @@ public class GameController : MonoBehaviour
                     // Calculate the isometric coordinates
                     float xCoord = (float) (y * 0.5 + x * 0.5);
                     float yCoord = (float) (y * 0.25 - x * 0.25 + z * 0.5);
-                    float zCoord = (float) (z);
+                    float zCoord = (float) (y);
                     if (game.Grid[x,y,z] != null) {
                         Debug.Log(xCoord + ", " + yCoord + ", " + zCoord);
-                        CreatePipe(game.Grid[x, y, z], new Vector3(xCoord, yCoord, zCoord));
+                        CreatePipe(game.Grid[x, y, z], new Vector3(xCoord, yCoord, zCoord), x, y, z);
                     }
                 }
             }
@@ -58,14 +62,29 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="pipe"></param>
     /// <param name="pos"></param>
-    public void CreatePipe(Pipe pipe, Vector3 pos) {
+    public void CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
         GameObject newPipe = Instantiate(pipePrefab);
         newPipe.transform.SetParent(transform, false);
         newPipe.transform.position = newPipe.transform.position + pos;
 
         string code = String.Join(",", pipe.Exits.Select(i => i.ToString()).ToArray());
 
-        newPipe.GetComponent<SortingGroup>().sortingOrder = (int) pos.z;
+        newPipe.GetComponent<SortingGroup>().sortingOrder = z;
         newPipe.GetComponent<SpriteRenderer>().sprite = SpriteManager.PipeSprites[code];
+        PipeController pipeController = newPipe.GetComponent<PipeController>();
+
+        pipeController.UpdateCollider();
+        pipeController.UpdateCoordinates(new int[] {x, y, z});
+        pipeController.gameController = this;
+        
+    }
+
+    public void Selected(PipeController pipeController, int[] coordinates) {
+        selectedObjectCoordinates = coordinates;
+        cursor.EnableCursor(pipeController);
+    }
+
+    public bool IsSelected() {
+        return selectedObjectCoordinates != null;
     }
 }

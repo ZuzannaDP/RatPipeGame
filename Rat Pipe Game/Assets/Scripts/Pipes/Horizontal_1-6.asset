@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6018d7fa0adf2834cae60815ba8372cd, type: 3}
   m_Name: Horizontal_1-6
   m_EditorClassIdentifier: 
-  exits: 
+  exits: 010000000000000000000000000000000000000001000000
   movable: 0
   tile: {fileID: 0}

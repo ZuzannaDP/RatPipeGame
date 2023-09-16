@@ -8,5 +8,4 @@ public class PipeData : ScriptableObject
 {
     public int[] exits;
     public bool movable;
-    public Tile tile;
 }

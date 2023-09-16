@@ -29,7 +29,7 @@ public class Cursor : MonoBehaviour {
 
     public void DisableCursor() {
         pipeObject.SetActive(false);
-        selectedPipe = null;
+        selectedPipeController = null;
     }
 
     private void Update() {
@@ -52,7 +52,10 @@ public class Cursor : MonoBehaviour {
         pipeObject.GetComponent<SortingGroup>().sortingOrder ++;
     }
 
-    public void Cancel() {
-        selectedPipeController.UnHide();
+    public void OnDeselect() {
+        if (selectedPipeController != null) {
+            selectedPipeController.UnHide();
+            DisableCursor();
+        }
     }
 }

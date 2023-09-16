@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    public void OnClick(InputAction.CallbackContext context) {
+    public void OnSelect(InputAction.CallbackContext context) {
         if (!context.started) return;
 
         var rayHit = Physics2D.GetRayIntersection(mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));

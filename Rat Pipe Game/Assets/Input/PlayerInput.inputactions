@@ -6,9 +6,18 @@
             "id": "90d77b84-7a5b-4ee3-b908-a7707cabbfc5",
             "actions": [
                 {
-                    "name": "Click",
+                    "name": "Select",
                     "type": "Button",
                     "id": "214c9196-7d67-4366-b110-3c077b4d9ae5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Unselect",
+                    "type": "Button",
+                    "id": "a28107cb-0cff-4aca-980d-41e3a7c816a3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -23,7 +32,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Click",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77d41f6f-7fa4-49f0-b0a5-8d42a22a7fdd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

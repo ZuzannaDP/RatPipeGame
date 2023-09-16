@@ -19,7 +19,6 @@ public class PipeController : MonoBehaviour, Clickable {
 
     void OnMouseEnter()
     {
-        Debug.Log(gameController == null ? "null" : "not null");
         if (!gameController.IsSelected()) {
             spriteRenderer.color = new Color (1, 0, 0, 1); 
         }
@@ -54,6 +53,7 @@ public class PipeController : MonoBehaviour, Clickable {
     }
 
     public void UnHide() {
-        gameObject.SetActive(false);
+        spriteRenderer.color = new Color (255, 255, 255, 255); 
+        gameObject.SetActive(true);
     }
 }

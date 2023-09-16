@@ -80,8 +80,15 @@ public class GameController : MonoBehaviour
     }
 
     public void Selected(PipeController pipeController, int[] coordinates) {
-        selectedObjectCoordinates = coordinates;
-        cursor.EnableCursor(pipeController);
+        if (!IsSelected()) {
+            selectedObjectCoordinates = coordinates;
+            cursor.EnableCursor(pipeController);
+        }
+    }
+
+    public void OnDeselect() {
+        selectedObjectCoordinates = null;
+        cursor.OnDeselect();
     }
 
     public bool IsSelected() {

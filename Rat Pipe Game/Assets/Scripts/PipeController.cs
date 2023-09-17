@@ -56,4 +56,8 @@ public class PipeController : MonoBehaviour, Clickable {
         spriteRenderer.color = new Color (255, 255, 255, 255); 
         gameObject.SetActive(true);
     }
+
+    public void OnRotate() {
+        // gameController.RotateSelected(this, coordinate);
+    }
 }

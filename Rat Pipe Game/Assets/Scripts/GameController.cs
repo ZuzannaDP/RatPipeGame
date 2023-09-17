@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.Rendering;
 using System;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Cursor cursor;
     private int[] selectedObjectCoordinates = null;
+    private int selectedLayer = 0;
 
     void Awake() {
         game = LevelManager.LoadLevel(currentLevel);
@@ -82,6 +84,7 @@ public class GameController : MonoBehaviour
     public void Selected(PipeController pipeController, int[] coordinates) {
         if (!IsSelected()) {
             selectedObjectCoordinates = coordinates;
+            selectedLayer = coordinates[2];
             cursor.EnableCursor(pipeController);
         }
     }
@@ -89,6 +92,23 @@ public class GameController : MonoBehaviour
     public void OnDeselect() {
         selectedObjectCoordinates = null;
         cursor.OnDeselect();
+    }
+
+    public void OnRaise(InputAction.CallbackContext context) {
+        Debug.Log("here");
+        if (context.started) {
+            selectedLayer ++;
+            cursor.IncreaseSortOrder();
+        }
+    }
+
+    public void OnLower(InputAction.CallbackContext context) {
+        if (context.started) {
+            if (selectedLayer >= 0) {
+                selectedLayer --;
+                cursor.DecreaseSortOrder();
+            }
+        }
     }
 
     public bool IsSelected() {

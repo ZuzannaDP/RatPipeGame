@@ -668,7 +668,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1882169471}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: OnSelect
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -680,6 +680,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 214c9196-7d67-4366-b110-3c077b4d9ae5
     m_ActionName: Gameplay/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnDeselect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a28107cb-0cff-4aca-980d-41e3a7c816a3
+    m_ActionName: Gameplay/Unselect[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnRaise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cc8674f7-1bf1-4a6f-9c92-2805c97ab947
+    m_ActionName: Gameplay/Raise[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnLower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 607f6304-97f7-47c5-b9f9-e5d57d5df1d5
+    m_ActionName: Gameplay/Lower[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

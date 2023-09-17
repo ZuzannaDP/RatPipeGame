@@ -49,7 +49,12 @@ public class Cursor : MonoBehaviour {
     }
 
     public void IncreaseSortOrder() {
+        Debug.Log(pipeObject.GetComponent<SortingGroup>().sortingOrder);
         pipeObject.GetComponent<SortingGroup>().sortingOrder ++;
+    }
+
+    public void DecreaseSortOrder() {
+        pipeObject.GetComponent<SortingGroup>().sortingOrder --;
     }
 
     public void OnDeselect() {

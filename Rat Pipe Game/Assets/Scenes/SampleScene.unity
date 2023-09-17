@@ -671,7 +671,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1882169471}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: ClickManager, Assembly-CSharp
         m_MethodName: OnSelect
         m_Mode: 0
         m_Arguments:
@@ -689,7 +689,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2124127624}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: OnDeselect
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -732,6 +732,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 607f6304-97f7-47c5-b9f9-e5d57d5df1d5
     m_ActionName: Gameplay/Lower[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnChangeRotationAxis
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2fad6ba8-f10a-40a3-8d3c-a0934bf082fd
+    m_ActionName: Gameplay/ChangeRotationAxis[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnRotateForward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1e30ee70-8edb-4643-b362-1e8330b34f36
+    m_ActionName: Gameplay/RotateForward[/Keyboard/rightBracket]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2124127624}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: OnRotateBackward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cfa1b85d-ec80-46a3-b0c9-cf684e6c5bd2
+    m_ActionName: Gameplay/RotateBackward[/Keyboard/leftBracket]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -746,7 +794,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882169466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f20b300eca240645b5e7c594b64aaeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b03c8b842687b54dadfcd8d82148783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2124127623
@@ -816,11 +864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2438153148682141170, guid: 8d07e1284c05e7849833191f8be3ace0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2438153148682141170, guid: 8d07e1284c05e7849833191f8be3ace0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2438153148682141170, guid: 8d07e1284c05e7849833191f8be3ace0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -919,6 +967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Layer
       objectReference: {fileID: 0}
+    - target: {fileID: 2328345465562967547, guid: 29a4c416bee0faa4eb6214697cdf5d59, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29a4c416bee0faa4eb6214697cdf5d59, type: 3}
 --- !u!1001 &9103712463027233598
@@ -946,11 +998,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9103712463229916108, guid: bbde1fd8d83120c4b854efab534472e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.44
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9103712463229916108, guid: bbde1fd8d83120c4b854efab534472e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9103712463229916108, guid: bbde1fd8d83120c4b854efab534472e4, type: 3}
       propertyPath: m_LocalPosition.z

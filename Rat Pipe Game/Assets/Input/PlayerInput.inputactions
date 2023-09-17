@@ -40,6 +40,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeRotationAxis",
+                    "type": "Button",
+                    "id": "2fad6ba8-f10a-40a3-8d3c-a0934bf082fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateForward",
+                    "type": "Button",
+                    "id": "1e30ee70-8edb-4643-b362-1e8330b34f36",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateBackward",
+                    "type": "Button",
+                    "id": "cfa1b85d-ec80-46a3-b0c9-cf684e6c5bd2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -84,6 +111,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Lower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5d7eea6-ea6b-4e53-943a-5b473a763a37",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeRotationAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aff684f8-50e5-400e-8d76-bfa8f4fcab30",
+                    "path": "<Keyboard>/rightBracket",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96a27b0e-5789-4b17-b082-881dc48db153",
+                    "path": "<Keyboard>/leftBracket",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateBackward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

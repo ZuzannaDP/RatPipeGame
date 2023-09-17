@@ -15,7 +15,6 @@ public class Cursor : MonoBehaviour {
 
     [SerializeField]
     private GameObject pipeObject;
-    private Pipe selectedPipe; 
     private PipeController selectedPipeController;
     
 
@@ -41,11 +40,13 @@ public class Cursor : MonoBehaviour {
     }
 
     public void DisplayPipe(Pipe pipe, int sortOrder) {
-        string code = String.Join(",", pipe.Exits.Select(i => i.ToString()).ToArray());
-
         pipeObject.GetComponent<SortingGroup>().sortingOrder = sortOrder;
-        pipeObject.GetComponent<SpriteRenderer>().sprite = SpriteManager.PipeSprites[code];
+        Rotate(pipe.Exits);
         pipeObject.GetComponent<PipeController>().UpdateCollider();
+    }
+
+    public void Rotate(int[] exits) {
+        pipeObject.GetComponent<PipeController>().RotateSprite(exits);
     }
 
     public void IncreaseSortOrder() {

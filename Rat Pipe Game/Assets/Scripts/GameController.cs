@@ -7,6 +7,18 @@ using System;
 using System.Linq;
 using UnityEngine.InputSystem;
 
+public enum Axis : int {
+    Xaxis = 0,
+    Yaxis = 1,
+    Zaxis = 2
+}
+
+public enum Direction : int {
+    Forward = 1,
+    Backward = -1,
+    None = 0
+}
+
 public class GameController : MonoBehaviour
 {
     // Tilemap for pipes
@@ -15,6 +27,7 @@ public class GameController : MonoBehaviour
 
     // Game logic and progresss
     private Game game;
+    private GameObject[,,] pipeGrid;
 
     // Test level
     public LevelData currentLevel;
@@ -26,9 +39,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private Cursor cursor;
-    private int[] selectedObjectCoordinates = null;
     private int selectedLayer = 0;
     private GameObject[] layers;
+    private int rotationAxis = (int) Axis.Xaxis;
 
     void Awake() {
         game = LevelManager.LoadLevel(currentLevel);
@@ -43,13 +56,16 @@ public class GameController : MonoBehaviour
     /// Display the grid in isometric coordinates.
     /// </summary>
     public void DisplayGame() {
+    pipeGrid = new GameObject[game.Grid.GetLength(0),game.Grid.GetLength(1),game.Grid.GetLength(2)];
+
         for (int x = 0; x < game.Grid.GetLength(0); x++) {
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
                     float[] coords = IsometricCoords(x, y, z);
-                    if (game.Grid[x,y,z] != null) {
-                        CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
+
+                    if (game.Grid[x, y, z] != null) {
+                        pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
                     }
                 }
             }
@@ -65,6 +81,7 @@ public class GameController : MonoBehaviour
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
                     float[] coords = IsometricCoords(x, y, z);
+
                     CreateSpace(layers[z], new Vector3(coords[0], coords[1], coords[2]), x, y, z, game.Grid.GetLength(2));
                 }
             }
@@ -112,36 +129,38 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="pipe"></param>
     /// <param name="pos"></param>
-    public void CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
+    public GameObject CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
         GameObject newPipe = Instantiate(pipePrefab);
         newPipe.transform.SetParent(transform, false);
         newPipe.transform.position = newPipe.transform.position + pos;
 
-        string code = String.Join(",", pipe.Exits.Select(i => i.ToString()).ToArray());
-
         newPipe.GetComponent<SortingGroup>().sortingOrder = z;
-        newPipe.GetComponent<SpriteRenderer>().sprite = SpriteManager.PipeSprites[code];
+        
         PipeController pipeController = newPipe.GetComponent<PipeController>();
-
+        pipeController.RotateSprite(pipe.Exits);
         pipeController.UpdateCollider();
         pipeController.UpdateCoordinates(new int[] {x, y, z});
         pipeController.gameController = this;
+
+        return newPipe;
         
     }
 
     public void Selected(PipeController pipeController, int[] coordinates) {
-        if (!IsSelected()) {
-            selectedObjectCoordinates = coordinates;
+        if (game.Select(coordinates)) {
             selectedLayer = coordinates[2];
             cursor.EnableCursor(pipeController);
             layers[selectedLayer].SetActive(true);
         }
     }
 
-    public void OnDeselect() {
-        layers[selectedLayer].SetActive(false);
-        selectedObjectCoordinates = null;
-        cursor.OnDeselect();
+    public void OnDeselect(InputAction.CallbackContext context) {
+        if (context.started) {
+            if (game.PutBack()) {
+                layers[selectedLayer].SetActive(false);
+                cursor.OnDeselect();
+            }
+        }
     }
 
     public void OnRaise(InputAction.CallbackContext context) {
@@ -166,15 +185,28 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void OnChangeRotationAxis(InputAction.CallbackContext context) {
+        if (context.started) {
+            this.rotationAxis = (this.rotationAxis + 1) % 3;
+            Debug.Log(rotationAxis);
+        }
+    }
+
+    public void OnRotateForward(InputAction.CallbackContext context) {
+        if (context.started) {
+            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Direction.Forward);
+            cursor.Rotate(newExits);
+        }
+    }
+
+    public void OnRotateBackward(InputAction.CallbackContext context) {
+        if (context.started) {
+            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Direction.Backward);
+            cursor.Rotate(newExits);
+        }
+    }
+
     public bool IsSelected() {
-        return selectedObjectCoordinates != null;
-    }
-
-    public bool IsMovable() {
-        return false;
-    }
-
-    public void RotateSelected() {
-        // cursor.Rotate();
+        return game.IsSelected();
     }
 }

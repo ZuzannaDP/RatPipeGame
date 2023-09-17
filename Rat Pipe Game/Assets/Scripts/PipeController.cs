@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class PipeController : MonoBehaviour, Clickable {
     private SpriteRenderer spriteRenderer;
@@ -40,8 +42,9 @@ public class PipeController : MonoBehaviour, Clickable {
         gameObject.AddComponent<PolygonCollider2D>();
     }
 
-    public void UpdateSprite() {
-
+    public void RotateSprite(int[] exits) {
+        string code = String.Join(",", exits.Select(i => i.ToString()).ToArray());
+        spriteRenderer.sprite = SpriteManager.PipeSprites[code];
     }
 
     public void UpdateCoordinates(int[] newCoordinate) {

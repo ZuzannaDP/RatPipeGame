@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c641560e42b5d0741a1e7c07ecc91b69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 0}
 --- !u!60 &312369177911877322
 PolygonCollider2D:
   m_ObjectHideFlags: 0

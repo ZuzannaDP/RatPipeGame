@@ -11,9 +11,16 @@ public class Game {
     public string Name => name;
     private Selection selected = null;
     public Selection Selected => selected;
+    private int[] startPoint;
+    private int[] endPoint;
+    private Player player;
+    public Player GetPlayer => player;
 
-    public Game(Pipe[,,] grid) {
+    public Game(Pipe[,,] grid, int[] startPoint, int[] endPoint) {
         this.grid = grid;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.player = new Player(startPoint, new int[3] {1,0,0});
     }
 
     public bool MoveSelectedPipe(int[] coordMoveTo) {

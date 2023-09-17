@@ -28,7 +28,7 @@ public static class LevelManager
             }
         }
 
-        Game game = new Game(grid);
+        Game game = new Game(grid, levelData.startPoint, levelData.endPoint);
 
         return game;
     }

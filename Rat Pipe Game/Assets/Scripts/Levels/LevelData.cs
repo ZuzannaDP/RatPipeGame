@@ -11,4 +11,6 @@ public class LevelData : ScriptableObject
     public int width;
     public int height;
     public string name;
+    public int[] startPoint;
+    public int[] endPoint;
 }

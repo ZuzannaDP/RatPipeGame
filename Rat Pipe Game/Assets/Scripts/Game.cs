@@ -23,11 +23,7 @@ public class Game {
         this.player = new Player(startPoint, dir);
     }
 
-    public bool MovePlayerForward() {
-        return false;
-    }
-
-    public bool TurnPlayer() {
+    public bool InPipe() {
         return false;
     }
 

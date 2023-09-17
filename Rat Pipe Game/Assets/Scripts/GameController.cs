@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
 
     public void DisplayPlayer() {
         int[] playerPos = game.GetPlayer.Position;
-        float[] coords = IsometricCoords(playerPos[0], playerPos[1], playerPos[2]);
+        float[] coords = WorldPosition(playerPos[0], playerPos[1], playerPos[2]);
         Vector3 vectCoords = new Vector3(coords[0], coords[1], coords[2]);
 
         // if using prefab return this
@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
-                    float[] coords = IsometricCoords(x, y, z);
+                    float[] coords = WorldPosition(x, y, z);
 
                     pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
                 }
@@ -99,7 +99,7 @@ public class GameController : MonoBehaviour
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
-                    float[] coords = IsometricCoords(x, y, z);
+                    float[] coords = WorldPosition(x, y, z);
 
                     CreateSpace(layers[z], new Vector3(coords[0], coords[1], coords[2]), x, y, z, game.Grid.GetLength(2));
                 }
@@ -109,11 +109,23 @@ public class GameController : MonoBehaviour
         this.layers = layers;
     }
  
-    private float[] IsometricCoords(int x, int y, int z) {
+    private float[] WorldPosition(int x, int y, int z) {
         float xCoord = (float) (y * 0.5 + x * 0.5);
         float yCoord = (float) (y * 0.25 - x * 0.25 + z * 0.5);
         float zCoord = (float) (yCoord - z);
         return new float[] {xCoord, yCoord, zCoord};
+    }
+
+    private int[] IsometricPosition(float x, float y, float z) {
+        float newX = x - (2 * y);
+        int xCoord = (int) Math.Round(newX);
+        int yCoord = (int) Math.Round(4 * y + newX);
+        int zCoord = (int) z;
+
+        // int xCoord = (int) Math.Round(x / 0.5);
+        // int yCoord = (int) Math.Round((y - z * 0.5) / 0.25);
+        // int zCoord = (int) z;
+        return new int[] {xCoord, yCoord, zCoord};
     }
 
     public GameObject[] CreateLayers(int zheight) {
@@ -163,6 +175,24 @@ public class GameController : MonoBehaviour
         return pipeController;
         
     }
+
+    public bool MoveRat(Vector3 pos) {
+        int[] isopos = IsometricPosition(pos.x, pos.y, pos.z);
+        string code = String.Join(",", isopos.Select(i => i.ToString()).ToArray());
+        Debug.Log(code);
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+    ///////////// Actions
 
     public void Selected(PipeController pipeController, int[] coordinates) {
         if (game.Select(coordinates)) {

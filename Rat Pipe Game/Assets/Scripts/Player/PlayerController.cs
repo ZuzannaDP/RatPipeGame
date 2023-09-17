@@ -16,10 +16,11 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private GameController gameController;
-    private float xspeed = 0.005f;
-    private float yspeed = 0.0025f;
+    private float xspeed = 0.004f;
+    private float yspeed = 0.002f;
     private float currentxspeed;
     private float currentyspeed;
+    private int[] facingSide;
     private (Vector3 xvector, Vector3 yvector) directionVectors;
     private bool isMoving = false;
 
@@ -31,17 +32,19 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void UpdateDirection(int[] direction) {
-        if (direction[(int) Axis.Xaxis] == 1) {
+    public void UpdateDirection(int[] facingSide) {
+        this.facingSide = facingSide;
+
+        if (facingSide[2] == 1) {
             spriteRenderer.sprite = spriteSE;
             directionVectors = (Vector3.right, Vector3.down);
-        } else if (direction[(int) Axis.Xaxis] == -1) {
+        } else if (facingSide[3] == 1) {
             spriteRenderer.sprite = spriteNW;
             directionVectors = (Vector3.left, Vector3.up);
-        } else if (direction[(int) Axis.Yaxis] == 1) {
+        } else if (facingSide[5] == 1) {
             spriteRenderer.sprite = spriteNE;
             directionVectors = (Vector3.right, Vector3.up);
-        } else if (direction[(int) Axis.Yaxis] == -1) {
+        } else if (facingSide[0] == 1) {
             spriteRenderer.sprite = spriteSW;
             directionVectors = (Vector3.left, Vector3.down);
         }
@@ -73,6 +76,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnTurnLeft(InputAction.CallbackContext context) {
+        if (context.started) {
+            UpdateDirection(Pipe.Rotation(facingSide, (int) Axis.Zaxis, -1));
+        }
+    }
+    
+    public void OnTurnRight(InputAction.CallbackContext context) {
+        if (context.started) {
+            UpdateDirection(Pipe.Rotation(facingSide, (int) Axis.Zaxis, 1));
+        }
+    }
+
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
@@ -81,6 +96,7 @@ public class PlayerController : MonoBehaviour
         if (isMoving) {
             transform.position += directionVectors.xvector * currentxspeed;
             transform.position += directionVectors.yvector * currentyspeed;
+            gameController.MoveRat(transform.position);
         }
     }
 }

@@ -16,16 +16,66 @@ public class Game {
         this.grid = grid;
     }
 
-    public bool Move(int[] coordsPipeMoving, int[] coordMoveTo) {
-        if (ValidMove(coordsPipeMoving, coordMoveTo)) {
+    public bool MoveSelectedPipe(int[] coordMoveTo) {
+        if (Move(selected.GetPipe, coordMoveTo)) {
+            this.selected = null;
             return true;
         }
 
         return false;
     }
 
-    public bool ValidMove(int[] coordsPipeMoving, int[] coordMoveTo) {
+    public bool Move(Pipe pipe, int[] coordMoveTo) {
+        if (ValidMove(pipe, coordMoveTo)) {
+            grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] = pipe;
+            return true;
+        }
+
         return false;
+    }
+
+    /// <summary>
+    /// A move is valid if at least one of the exits in a pipe conntects to
+    /// an exit in another pipe; there isn't already a pipe in the space;
+    /// </summary>
+    /// <param name="coordsPipeMoving"></param>
+    /// <param name="coordMoveTo"></param>
+    /// <returns></returns>
+    public bool ValidMove(Pipe pipe, int[] coordMoveTo) {
+        // Check empty
+        if (grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] != null) {
+            return false;
+        }
+
+        // Check connections
+        int[] exits = pipe.Exits;
+        bool foundConnection = false;
+
+        for (int e = 0; e < exits.Length; e++) {
+            if (exits[e] == 1) {
+                int[] direction = Pipe.directions[e];
+                int[] adjacent = new int[] {coordMoveTo[0] + direction[0], coordMoveTo[1] + direction[1], coordMoveTo[2] + direction[2]};
+                
+                // Check pipe exists here
+                if (ValidCoords(adjacent)) {
+                    Pipe adjpipe = grid[adjacent[0], adjacent[1], adjacent[2]];
+
+                    if (adjpipe != null && adjpipe.Exits[5 - e] == 1) {
+                        foundConnection = true;
+                    }
+                }
+            }
+        }
+
+        return foundConnection;
+    }
+
+    public bool ValidCoord(int[] coord, int axis) {
+        return coord[axis] >= 0 && coord[axis] < grid.GetLength(axis);
+    }
+
+    public bool ValidCoords(int[] coord) {
+        return ValidCoord(coord, (int) Axis.Xaxis) && ValidCoord(coord, (int) Axis.Yaxis) && ValidCoord(coord, (int) Axis.Zaxis);
     }
 
     public bool Select(int[] coords) {
@@ -39,10 +89,14 @@ public class Game {
     }
 
     public bool PutBack() {
-        this.selected.Reset();
-        grid[selected.OrigCoords[0], selected.OrigCoords[1], selected.OrigCoords[2]] = selected.GetPipe;
-        this.selected = null;
-        return true;
+        if (IsSelected()) {
+            this.selected.Reset();
+            grid[selected.OrigCoords[0], selected.OrigCoords[1], selected.OrigCoords[2]] = selected.GetPipe;
+            this.selected = null;
+            return true;
+        }
+
+        return false;
     }
 
     public bool IsSelected() {

@@ -33,6 +33,6 @@ public class SpaceController : MonoBehaviour, Clickable {
     }
 
     public void Click() {
-
+        gameController.SelectedSpace(coordinate);
     }
 }

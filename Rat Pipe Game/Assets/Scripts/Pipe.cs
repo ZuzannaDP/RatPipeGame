@@ -8,6 +8,14 @@ public class Pipe {
     public static int[] staticxaxis = new int[] {3, 4};
     public static int[] yaxis = new int[] {3, 2, 4, 5};
     public static int[] staticyaxis = new int[] {1, 6};
+    public static int[][] directions = new int[6][] {
+        new int[3] {0,-1,0}, 
+        new int[3] {0,0,-1}, 
+        new int[3] {1,0,0}, 
+        new int[3] {-1,0,0}, 
+        new int[3] {0,0,1}, 
+        new int[3] {0,1,0}
+    };
 
     private int[] exits;
     public int[] Exits => exits;

@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
     // Game logic and progresss
     private Game game;
-    private GameObject[,,] pipeGrid;
+    private PipeController[,,] pipeGrid;
 
     // Test level
     public LevelData currentLevel;
@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
     /// Display the grid in isometric coordinates.
     /// </summary>
     public void DisplayGame() {
-    pipeGrid = new GameObject[game.Grid.GetLength(0),game.Grid.GetLength(1),game.Grid.GetLength(2)];
+    pipeGrid = new PipeController[game.Grid.GetLength(0),game.Grid.GetLength(1),game.Grid.GetLength(2)];
 
         for (int x = 0; x < game.Grid.GetLength(0); x++) {
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
@@ -64,9 +64,7 @@ public class GameController : MonoBehaviour
                     // Calculate the isometric coordinates
                     float[] coords = IsometricCoords(x, y, z);
 
-                    if (game.Grid[x, y, z] != null) {
-                        pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
-                    }
+                    pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
                 }
             }
         }
@@ -129,7 +127,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="pipe"></param>
     /// <param name="pos"></param>
-    public GameObject CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
+    public PipeController CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
         GameObject newPipe = Instantiate(pipePrefab);
         newPipe.transform.SetParent(transform, false);
         newPipe.transform.position = newPipe.transform.position + pos;
@@ -137,12 +135,11 @@ public class GameController : MonoBehaviour
         newPipe.GetComponent<SortingGroup>().sortingOrder = z;
         
         PipeController pipeController = newPipe.GetComponent<PipeController>();
-        pipeController.RotateSprite(pipe.Exits);
-        pipeController.UpdateCollider();
+        pipeController.DrawPipe(pipe);
         pipeController.UpdateCoordinates(new int[] {x, y, z});
         pipeController.gameController = this;
 
-        return newPipe;
+        return pipeController;
         
     }
 
@@ -151,6 +148,14 @@ public class GameController : MonoBehaviour
             selectedLayer = coordinates[2];
             cursor.EnableCursor(pipeController);
             layers[selectedLayer].SetActive(true);
+        }
+    }
+
+    public void SelectedSpace(int[] coords) {
+        if (game.MoveSelectedPipe(coords)) {
+            pipeGrid[coords[0], coords[1], coords[2]].DrawPipe(game.Grid[coords[0], coords[1], coords[2]]);
+            cursor.DisableCursor();
+            layers[selectedLayer].SetActive(false);
         }
     }
 

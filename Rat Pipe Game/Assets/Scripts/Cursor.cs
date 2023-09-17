@@ -46,7 +46,7 @@ public class Cursor : MonoBehaviour {
     }
 
     public void Rotate(int[] exits) {
-        pipeObject.GetComponent<PipeController>().RotateSprite(exits);
+        pipeObject.GetComponent<PipeController>().UpdateSprite(exits);
     }
 
     public void IncreaseSortOrder() {

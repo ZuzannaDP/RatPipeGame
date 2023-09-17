@@ -33,6 +33,17 @@ public class PipeController : MonoBehaviour, Clickable {
         }
     }
 
+    public void DrawPipe(Pipe pipe) {
+        if (pipe == null) {
+            Hide();
+            return;
+        }
+
+        UpdateSprite(pipe.Exits);
+        UpdateCollider();
+        UnHide();
+    }
+
     public void Click() {
         gameController.Selected(this, coordinate);
     }
@@ -42,7 +53,7 @@ public class PipeController : MonoBehaviour, Clickable {
         gameObject.AddComponent<PolygonCollider2D>();
     }
 
-    public void RotateSprite(int[] exits) {
+    public void UpdateSprite(int[] exits) {
         string code = String.Join(",", exits.Select(i => i.ToString()).ToArray());
         spriteRenderer.sprite = SpriteManager.PipeSprites[code];
     }

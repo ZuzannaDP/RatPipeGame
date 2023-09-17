@@ -46,3 +46,4 @@ MonoBehaviour:
   name: The first level
   startPoint: 000000000000000000000000
   endPoint: 000000000200000002000000
+  startingDirection: 000000000100000000000000

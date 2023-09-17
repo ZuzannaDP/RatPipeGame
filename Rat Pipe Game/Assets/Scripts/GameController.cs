@@ -36,7 +36,11 @@ public class GameController : MonoBehaviour
     public GameObject pipePrefab;
     public GameObject spacePrefab;
     public GameObject layerPrefab;
-    public GameObject playerPrefab;
+
+    // Player
+    [SerializeField]
+    private GameObject playerObject;
+    private PlayerController playerController;
 
     [SerializeField]
     private Cursor cursor;
@@ -60,9 +64,13 @@ public class GameController : MonoBehaviour
         float[] coords = IsometricCoords(playerPos[0], playerPos[1], playerPos[2]);
         Vector3 vectCoords = new Vector3(coords[0], coords[1], coords[2]);
 
-        GameObject newPlayer = Instantiate(playerPrefab);
-        newPlayer.transform.SetParent(transform, false);
-        newPlayer.transform.position = newPlayer.transform.position + vectCoords;
+        // if using prefab return this
+        // GameObject newPlayer = Instantiate(playerPrefab);
+        // newPlayer.transform.SetParent(transform, false);
+        playerObject.transform.position = playerObject.transform.position + vectCoords;
+
+        playerController = playerObject.GetComponent<PlayerController>();
+        playerController.UpdateDirection(game.GetPlayer.Direction);
     }
 
     /// <summary>

@@ -16,15 +16,42 @@ public class Game {
     private Player player;
     public Player GetPlayer => player;
 
-    public Game(Pipe[,,] grid, int[] startPoint, int[] endPoint) {
+    public Game(Pipe[,,] grid, int[] startPoint, int[] endPoint, int[] dir) {
         this.grid = grid;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.player = new Player(startPoint, new int[3] {1,0,0});
+        this.player = new Player(startPoint, dir);
     }
 
+    public bool MovePlayerForward() {
+        return false;
+    }
+
+    public bool TurnPlayer() {
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="coordMoveTo"></param>
+    /// <returns></returns>
     public bool MoveSelectedPipe(int[] coordMoveTo) {
-        if (Move(selected.GetPipe, coordMoveTo)) {
+        if (MovePipe(selected.GetPipe, coordMoveTo)) {
             this.selected = null;
             return true;
         }
@@ -32,8 +59,14 @@ public class Game {
         return false;
     }
 
-    public bool Move(Pipe pipe, int[] coordMoveTo) {
-        if (ValidMove(pipe, coordMoveTo)) {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pipe"></param>
+    /// <param name="coordMoveTo"></param>
+    /// <returns></returns>
+    public bool MovePipe(Pipe pipe, int[] coordMoveTo) {
+        if (ValidPipeMove(pipe, coordMoveTo)) {
             grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] = pipe;
             return true;
         }
@@ -48,7 +81,7 @@ public class Game {
     /// <param name="coordsPipeMoving"></param>
     /// <param name="coordMoveTo"></param>
     /// <returns></returns>
-    public bool ValidMove(Pipe pipe, int[] coordMoveTo) {
+    public bool ValidPipeMove(Pipe pipe, int[] coordMoveTo) {
         // Check empty
         if (grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] != null) {
             return false;
@@ -76,6 +109,15 @@ public class Game {
 
         return foundConnection;
     }
+
+
+
+
+
+
+
+
+
 
     public bool ValidCoord(int[] coord, int axis) {
         return coord[axis] >= 0 && coord[axis] < grid.GetLength(axis);
@@ -114,6 +156,13 @@ public class Game {
         return selected.GetPipe.Rotate(axis, direction);
     }
 }
+
+
+
+
+
+
+
 
 public class Selection {
     private Pipe pipe;

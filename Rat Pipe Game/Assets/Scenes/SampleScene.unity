@@ -655,6 +655,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1303858427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2664035350576620819, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+  m_PrefabInstance: {fileID: 1442992494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1303858428 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6675264486642039762, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+  m_PrefabInstance: {fileID: 1442992494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303858427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6315c18090be544db65396b0435ed5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &1442992494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2664035350576620819, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6675264486642039762, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 2124127624}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
 --- !u!1 &1882169466
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +902,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: cfa1b85d-ec80-46a3-b0c9-cf684e6c5bd2
     m_ActionName: Gameplay/RotateBackward[/Keyboard/leftBracket]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1303858428}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMoveForward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 64a9bac6-677b-4993-9850-47a17836be4c
+    m_ActionName: Gameplay/MoveForward[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1303858428}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMoveBackward
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6630a0f7-cad3-4a73-bf73-d6f855f42844
+    m_ActionName: Gameplay/MoveBackward[/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -876,7 +985,7 @@ MonoBehaviour:
   pipePrefab: {fileID: 9103712463229916110, guid: bbde1fd8d83120c4b854efab534472e4, type: 3}
   spacePrefab: {fileID: 6089072942644895970, guid: 8d07e1284c05e7849833191f8be3ace0, type: 3}
   layerPrefab: {fileID: 2328345465562967547, guid: 29a4c416bee0faa4eb6214697cdf5d59, type: 3}
-  playerPrefab: {fileID: 0}
+  playerObject: {fileID: 1303858427}
   cursor: {fileID: 631305030}
 --- !u!4 &2124127625
 Transform:
@@ -893,67 +1002,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2664035349014020841
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2664035350576620819, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620819, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2664035350576620821, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 76b7d883bf863094bba3016d7839497a, type: 3}
 --- !u!1001 &4342616723106011294
 PrefabInstance:
   m_ObjectHideFlags: 0

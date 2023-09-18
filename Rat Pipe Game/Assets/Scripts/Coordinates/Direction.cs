@@ -38,15 +38,26 @@ public class Direction {
     }
 
     public Direction Rotate(Axis axis, int dir) {
+        int a = -1 * dir;
+        int b = 1 * dir;
+
         if (axis.Equals(Axis.Zaxis)) {
             return new Direction(
-                x == 0 ? y * dir : 0,
-                y == 0 ? x * dir : 0,
+                x == 0 ? y * b : 0,
+                y == 0 ? x * a: 0,
                 z
             );
         }
         
         // TODO: complete this
         return new Direction(x, y, z);
+    }
+
+    public string Print() {
+        return x + ", " + y + ", " + z;
+    }
+
+    public Direction Opposite() {
+        return new Direction(x * -1, y * -1, z * -1);
     }
 }

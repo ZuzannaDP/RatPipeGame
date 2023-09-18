@@ -31,6 +31,16 @@ public class Pipe {
         return exits.Length == 0;
     }
 
+    public bool HasExit(Direction dir) {
+        int[,,] cubeExits = new int[3,3,3] {
+            {{-1,-1,-1},{-1,exits[3],-1},{-1,-1,-1}},
+            {{-1,exits[0],-1},{exits[1],-1,exits[4]},{-1,exits[5],-1}},
+            {{-1,-1,-1},{-1,exits[2],-1},{-1,-1,-1}}
+        };
+
+        return cubeExits[1 + dir.x, 1 + dir.y, 1 + dir.z] == 1;
+    }
+
     /// <summary>
     /// Finds the rotation given the axis and direction the rotation is occuring.
     /// For example, a clockwise spin on the zaxis would have parameters 0, 0, 1.

@@ -16,7 +16,7 @@ public class Position
     public Direction Adjacent(Position pos2) {
         Direction dir = GetDirection(pos2);
 
-        if (!dir.IsAdjacent()) {
+        if (dir.IsAdjacent()) {
             return dir;
         }
 
@@ -47,6 +47,16 @@ public class Position
         }
         
         return x == pos.x && y == pos.y && z == pos.z; 
+    }
+
+    public Position IncrementAxis(Axis axis, int dir) {
+        if (axis.Equals(Axis.Xaxis)) {
+            return new Position(x + dir, y, z);
+        } else if (axis.Equals(Axis.Yaxis)) {
+            return new Position(x, y + dir, z);
+        } else {
+            return new Position(x, y, z + dir);
+        }
     }
 
     public static Vector3 WorldPosition(Position pos) {

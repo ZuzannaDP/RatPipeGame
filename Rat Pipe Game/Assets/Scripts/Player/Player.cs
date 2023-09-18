@@ -1,8 +1,7 @@
 
 public class Player
 {
-    private Position position; 
-    public Position Position => position;
+    public Position position;
     private Direction facing;
     public Direction Facing => facing;
 

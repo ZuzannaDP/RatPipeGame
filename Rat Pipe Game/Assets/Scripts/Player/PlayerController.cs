@@ -77,12 +77,34 @@ public class PlayerController : MonoBehaviour
     public void OnTurnLeft(InputAction.CallbackContext context) {
         if (context.started) {
             UpdateDirection(facingSide.Rotate(Axis.Zaxis, -1));
+            SnapToGrid();
         }
     }
     
     public void OnTurnRight(InputAction.CallbackContext context) {
         if (context.started) {
             UpdateDirection(facingSide.Rotate(Axis.Zaxis, 1));
+            SnapToGrid();
+        }
+    }
+ 
+    public void SnapToGrid() {
+        transform.position = Position.WorldPosition(gameController.GetPlayerPosition());
+    }
+ 
+    public void OnJump(InputAction.CallbackContext context) {
+        if (context.started) {
+            if (gameController.JumpRat()) {
+                transform.position = Position.WorldPosition(gameController.GetPlayerPosition());
+            }
+        }
+    }
+
+    public void OnFall(InputAction.CallbackContext context) {
+        if (context.started) {
+            if (gameController.FallRat()) {
+                transform.position = Position.WorldPosition(gameController.GetPlayerPosition());
+            }
         }
     }
 

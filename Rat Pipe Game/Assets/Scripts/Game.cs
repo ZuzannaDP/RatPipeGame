@@ -30,20 +30,43 @@ public class Game {
     /// <returns></returns>
     public bool MovePlayer(Position newPos) {
         // Check Player is already in this position
-        if (player.Position.Equals(newPos)) {
+        if (player.position.Equals(newPos)) {
+            Debug.Log("Already here");
             return true;
         }
 
-        // Check pipe exists
-        Debug.Log(newPos.Print());
-        if (grid[newPos.x, newPos.y, newPos.z] == null) {
+        // Check position is not outside grid
+        if (!ValidCoords(newPos)) {
+            Debug.Log("Outside grid!");
             return false;
         }
 
-        // Check connection exists
+        // Check pipe exists
+        Pipe pipeMoveTo = grid[newPos.x, newPos.y, newPos.z];
+        if (pipeMoveTo == null) {
+            Debug.Log("Pipe doesn't exist!");
+            return false;
+        }
 
+        // Check pipe is adjacent
+        Direction pipeDir = player.position.Adjacent(newPos);
+        Debug.Log("current position: " + player.position.Print());
+        Debug.Log("new position: " + newPos.Print());
+        if (pipeDir == null) {
+            Debug.Log("Pipe is not adjacent!");
+            return false;
+        }
+        Debug.Log("pipe direction: " + pipeDir.Print());
 
-        return true;
+        // Check exits connect
+        if (grid[player.position.x, player.position.y, player.position.z].HasExit(pipeDir) && 
+            pipeMoveTo.HasExit(pipeDir.Opposite())) {
+                Debug.Log("Connection");
+                player.position = newPos;
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

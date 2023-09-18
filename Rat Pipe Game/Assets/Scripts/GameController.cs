@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
     }
 
     public void DisplayPlayer() {
-        Position playerPos = game.GetPlayer.Position;
+        Position playerPos = game.GetPlayer.position;
         Vector3 coords = Position.WorldPosition(playerPos);
 
         // if using prefab return this
@@ -144,15 +144,21 @@ public class GameController : MonoBehaviour
         
     }
 
-    public bool MoveRat(Vector3 pos) {
-        game.MovePlayer(Position.IsometricPosition(pos));
-
-        // int[] isopos = Position.IsometricPosition(pos);
-        // string code = String.Join(",", isopos.Select(i => i.ToString()).ToArray());
-        // Debug.Log(code);
-        return true;
+    public bool MoveRat(Vector3 vecPos) {
+        return game.MovePlayer(Position.IsometricPosition(vecPos));
     }
 
+    public bool JumpRat() {
+        return game.MovePlayer(game.GetPlayer.position.IncrementAxis(Axis.Zaxis, 1));
+    }
+
+    public bool FallRat() {
+        return game.MovePlayer(game.GetPlayer.position.IncrementAxis(Axis.Zaxis, -1));
+    }
+
+    public Position GetPlayerPosition() {
+        return game.GetPlayer.position;
+    }
 
 
 

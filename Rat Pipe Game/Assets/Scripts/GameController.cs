@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
+    // TEST REMOVE LATER
+    public LevelData testLevelData;
+
     // Tilemap for pipes
     [SerializeField]
     private Tilemap pipes;
@@ -14,9 +17,6 @@ public class GameController : MonoBehaviour
     // Game logic and progresss
     private Game game;
     private PipeController[,,] pipeGrid;
-
-    // Test level
-    public LevelData currentLevel;
 
     // Prefabs
     public GameObject pipePrefab;
@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
     private int rotationAxis = (int) Axis.Xaxis;
 
     void Awake() {
-        game = LevelManager.LoadLevel(currentLevel);
+        game = LevelManager.LoadLevel(LevelManager.levelData != null ? LevelManager.levelData : testLevelData);
         SpriteManager.LoadSprites();
 
         DisplayGame();

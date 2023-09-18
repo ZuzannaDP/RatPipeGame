@@ -1,6 +1,11 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class LevelManager
 {
+
+    public static LevelData levelData;
+
     /// <summary>
     /// Creates a game level from the stored level data.
     /// </summary>
@@ -30,5 +35,10 @@ public static class LevelManager
         );
 
         return game;
+    }
+
+    public static void LoadScene(LevelData newLevelData) {
+        levelData = newLevelData;
+        SceneManager.LoadScene("Level");
     }
 }

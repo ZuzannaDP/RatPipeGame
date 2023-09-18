@@ -5,7 +5,7 @@ using System.Linq;
 public class PipeController : MonoBehaviour, Clickable {
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer GetSpriteRenderer => spriteRenderer;
-    private int[] coordinate;
+    private Position coordinate;
 
     public GameController gameController;
 
@@ -56,7 +56,7 @@ public class PipeController : MonoBehaviour, Clickable {
         spriteRenderer.sprite = SpriteManager.PipeSprites[code];
     }
 
-    public void UpdateCoordinates(int[] newCoordinate) {
+    public void UpdateCoordinates(Position newCoordinate) {
         coordinate = newCoordinate;
     }
 

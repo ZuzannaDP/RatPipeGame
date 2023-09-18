@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpaceController : MonoBehaviour, Clickable {
     private SpriteRenderer spriteRenderer;
     public SpriteRenderer GetSpriteRenderer => spriteRenderer;
-    private int[] coordinate;
+    private Position coordinate;
 
     public GameController gameController;
 
@@ -26,7 +26,7 @@ public class SpaceController : MonoBehaviour, Clickable {
         spriteRenderer.color = new Color (255, 255, 255, 0); 
     }
 
-    public void UpdateCoordinates(int[] newCoordinate) {
+    public void UpdateCoordinates(Position newCoordinate) {
         coordinate = newCoordinate;
     }
 

@@ -24,9 +24,9 @@ public static class LevelManager
 
         Game game = new Game(
             grid, 
-            levelData.startPoint, 
-            levelData.endPoint, 
-            levelData.startingDirection
+            new Position(levelData.startPoint[0], levelData.startPoint[1], levelData.startPoint[2]), 
+            new Position(levelData.endPoint[0], levelData.endPoint[1], levelData.endPoint[2]), 
+            new Direction(levelData.startingDirection[0], levelData.startingDirection[1], levelData.startingDirection[2])
         );
 
         return game;

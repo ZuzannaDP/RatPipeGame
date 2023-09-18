@@ -5,18 +5,6 @@ using System;
 using System.Linq;
 using UnityEngine.InputSystem;
 
-public enum Axis : int {
-    Xaxis = 0,
-    Yaxis = 1,
-    Zaxis = 2
-}
-
-public enum Direction : int {
-    Forward = 1,
-    Backward = -1,
-    None = 0
-}
-
 public class GameController : MonoBehaviour
 {
     // Tilemap for pipes
@@ -58,17 +46,16 @@ public class GameController : MonoBehaviour
     }
 
     public void DisplayPlayer() {
-        int[] playerPos = game.GetPlayer.Position;
-        float[] coords = WorldPosition(playerPos[0], playerPos[1], playerPos[2]);
-        Vector3 vectCoords = new Vector3(coords[0], coords[1], coords[2]);
+        Position playerPos = game.GetPlayer.Position;
+        Vector3 coords = Position.WorldPosition(playerPos);
 
         // if using prefab return this
         // GameObject newPlayer = Instantiate(playerPrefab);
         // newPlayer.transform.SetParent(transform, false);
-        playerObject.transform.position = playerObject.transform.position + vectCoords;
+        playerObject.transform.position = playerObject.transform.position + coords;
 
         playerController = playerObject.GetComponent<PlayerController>();
-        playerController.UpdateDirection(game.GetPlayer.Direction);
+        playerController.UpdateDirection(game.GetPlayer.Facing);
     }
 
     /// <summary>
@@ -81,9 +68,10 @@ public class GameController : MonoBehaviour
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
-                    float[] coords = WorldPosition(x, y, z);
+                    Position pos = new Position(x, y, z);
+                    Vector3 coords = Position.WorldPosition(new Position(x, y, z));
 
-                    pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], new Vector3(coords[0], coords[1], coords[2]), x, y, z);
+                    pipeGrid[x, y, z] = CreatePipe(game.Grid[x, y, z], coords, pos);
                 }
             }
         }
@@ -97,33 +85,15 @@ public class GameController : MonoBehaviour
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
                 for (int z = 0; z < game.Grid.GetLength(2); z++) {
                     // Calculate the isometric coordinates
-                    float[] coords = WorldPosition(x, y, z);
+                    Position pos = new Position(x, y, z);
+                    Vector3 coords = Position.WorldPosition(pos);
 
-                    CreateSpace(layers[z], new Vector3(coords[0], coords[1], coords[2]), x, y, z, game.Grid.GetLength(2));
+                    CreateSpace(layers[z], coords, pos, game.Grid.GetLength(2));
                 }
             }
         }
 
         this.layers = layers;
-    }
- 
-    private float[] WorldPosition(int x, int y, int z) {
-        float xCoord = (float) (y * 0.5 + x * 0.5);
-        float yCoord = (float) (y * 0.25 - x * 0.25 + z * 0.5);
-        float zCoord = (float) (yCoord - z);
-        return new float[] {xCoord, yCoord, zCoord};
-    }
-
-    private int[] IsometricPosition(float x, float y, float z) {
-        float newX = x - (2 * y);
-        int xCoord = (int) Math.Round(newX);
-        int yCoord = (int) Math.Round(4 * y + newX);
-        int zCoord = (int) z;
-
-        // int xCoord = (int) Math.Round(x / 0.5);
-        // int yCoord = (int) Math.Round((y - z * 0.5) / 0.25);
-        // int zCoord = (int) z;
-        return new int[] {xCoord, yCoord, zCoord};
     }
 
     public GameObject[] CreateLayers(int zheight) {
@@ -139,16 +109,16 @@ public class GameController : MonoBehaviour
         return layers;
     }
 
-    public void CreateSpace(GameObject layer, Vector3 pos, int x, int y, int z, int zheight) {
-        pos.z = (float) pos.z - zheight;
+    public void CreateSpace(GameObject layer, Vector3 vecpos, Position pos, int zheight) {
+        vecpos.z = (float) vecpos.z - zheight;
         GameObject newSpace = Instantiate(spacePrefab);
         newSpace.transform.SetParent(layer.transform, false);
-        newSpace.transform.position = newSpace.transform.position + pos;
+        newSpace.transform.position = newSpace.transform.position + vecpos;
 
-        newSpace.GetComponent<SortingGroup>().sortingOrder = z + zheight;
+        newSpace.GetComponent<SortingGroup>().sortingOrder = pos.z + zheight;
         SpaceController spaceController = newSpace.GetComponent<SpaceController>();
 
-        spaceController.UpdateCoordinates(new int[] {x, y, z});
+        spaceController.UpdateCoordinates(pos);
         spaceController.gameController = this;
         
     }
@@ -158,16 +128,16 @@ public class GameController : MonoBehaviour
     /// </summary>
     /// <param name="pipe"></param>
     /// <param name="pos"></param>
-    public PipeController CreatePipe(Pipe pipe, Vector3 pos, int x, int y, int z) {
+    public PipeController CreatePipe(Pipe pipe, Vector3 vecpos, Position pos) {
         GameObject newPipe = Instantiate(pipePrefab);
         newPipe.transform.SetParent(transform, false);
-        newPipe.transform.position = newPipe.transform.position + pos;
+        newPipe.transform.position = newPipe.transform.position + vecpos;
 
-        newPipe.GetComponent<SortingGroup>().sortingOrder = z;
+        newPipe.GetComponent<SortingGroup>().sortingOrder = pos.z;
         
         PipeController pipeController = newPipe.GetComponent<PipeController>();
         pipeController.DrawPipe(pipe);
-        pipeController.UpdateCoordinates(new int[] {x, y, z});
+        pipeController.UpdateCoordinates(pos);
         pipeController.gameController = this;
 
         return pipeController;
@@ -175,9 +145,11 @@ public class GameController : MonoBehaviour
     }
 
     public bool MoveRat(Vector3 pos) {
-        int[] isopos = IsometricPosition(pos.x, pos.y, pos.z);
-        string code = String.Join(",", isopos.Select(i => i.ToString()).ToArray());
-        Debug.Log(code);
+        game.MovePlayer(Position.IsometricPosition(pos));
+
+        // int[] isopos = Position.IsometricPosition(pos);
+        // string code = String.Join(",", isopos.Select(i => i.ToString()).ToArray());
+        // Debug.Log(code);
         return true;
     }
 
@@ -192,17 +164,17 @@ public class GameController : MonoBehaviour
 
     ///////////// Actions
 
-    public void Selected(PipeController pipeController, int[] coordinates) {
+    public void Selected(PipeController pipeController, Position coordinates) {
         if (game.Select(coordinates)) {
-            selectedLayer = coordinates[2];
+            selectedLayer = coordinates.z;
             cursor.EnableCursor(pipeController);
             layers[selectedLayer].SetActive(true);
         }
     }
 
-    public void SelectedSpace(int[] coords) {
+    public void SelectedSpace(Position coords) {
         if (game.MoveSelectedPipe(coords)) {
-            pipeGrid[coords[0], coords[1], coords[2]].DrawPipe(game.Grid[coords[0], coords[1], coords[2]]);
+            pipeGrid[coords.x, coords.y, coords.z].DrawPipe(game.Grid[coords.x, coords.y, coords.z]);
             cursor.DisableCursor();
             layers[selectedLayer].SetActive(false);
         }
@@ -248,14 +220,14 @@ public class GameController : MonoBehaviour
 
     public void OnRotateForward(InputAction.CallbackContext context) {
         if (context.started) {
-            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Direction.Forward);
+            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Dir.Forward);
             cursor.Rotate(newExits);
         }
     }
 
     public void OnRotateBackward(InputAction.CallbackContext context) {
         if (context.started) {
-            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Direction.Backward);
+            int[] newExits = game.RotateSelected(this.rotationAxis, (int) Dir.Backward);
             cursor.Rotate(newExits);
         }
     }

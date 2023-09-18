@@ -1,13 +1,13 @@
 
 public class Player
 {
-    private int[] position; 
-    public int[] Position => position;
-    private int[] direction;
-    public int[] Direction => direction;
+    private Position position; 
+    public Position Position => position;
+    private Direction facing;
+    public Direction Facing => facing;
 
-    public Player(int[] position, int[] direction) {
+    public Player(Position position, Direction direction) {
         this.position = position;
-        this.direction = direction;
+        facing = direction;
     }
 }

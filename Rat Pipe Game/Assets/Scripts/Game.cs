@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /// <summary>
 /// All gameplay logic (seperate from UI).
 /// </summary> 
@@ -8,42 +10,48 @@ public class Game {
     public string Name => name;
     private Selection selected = null;
     public Selection Selected => selected;
-    private int[] startPoint;
-    private int[] endPoint;
+    private Position startPoint;
+    private Position endPoint;
     private Player player;
     public Player GetPlayer => player;
 
-    public Game(Pipe[,,] grid, int[] startPoint, int[] endPoint, int[] dir) {
+    public Game(Pipe[,,] grid, Position startPoint, Position endPoint, Direction dir) {
         this.grid = grid;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.player = new Player(startPoint, dir);
+        player = new Player(startPoint, dir);
     }
 
-    public bool InPipe() {
-        return false;
+    /// <summary>
+    /// Move Player to the new position if there is a pipe in that
+    /// space and the pipe in the curent space connects.
+    /// </summary>
+    /// <param name="newPos"></param>
+    /// <returns></returns>
+    public bool MovePlayer(Position newPos) {
+        // Check Player is already in this position
+        if (player.Position.Equals(newPos)) {
+            return true;
+        }
+
+        // Check pipe exists
+        Debug.Log(newPos.Print());
+        if (grid[newPos.x, newPos.y, newPos.z] == null) {
+            return false;
+        }
+
+        // Check connection exists
+
+
+        return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="coordMoveTo"></param>
     /// <returns></returns>
-    public bool MoveSelectedPipe(int[] coordMoveTo) {
+    public bool MoveSelectedPipe(Position coordMoveTo) {
         if (MovePipe(selected.GetPipe, coordMoveTo)) {
             this.selected = null;
             return true;
@@ -58,9 +66,9 @@ public class Game {
     /// <param name="pipe"></param>
     /// <param name="coordMoveTo"></param>
     /// <returns></returns>
-    public bool MovePipe(Pipe pipe, int[] coordMoveTo) {
+    public bool MovePipe(Pipe pipe, Position coordMoveTo) {
         if (ValidPipeMove(pipe, coordMoveTo)) {
-            grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] = pipe;
+            grid[coordMoveTo.x, coordMoveTo.y, coordMoveTo.z] = pipe;
             return true;
         }
 
@@ -74,9 +82,9 @@ public class Game {
     /// <param name="coordsPipeMoving"></param>
     /// <param name="coordMoveTo"></param>
     /// <returns></returns>
-    public bool ValidPipeMove(Pipe pipe, int[] coordMoveTo) {
+    public bool ValidPipeMove(Pipe pipe, Position coordMoveTo) {
         // Check empty
-        if (grid[coordMoveTo[0], coordMoveTo[1], coordMoveTo[2]] != null) {
+        if (grid[coordMoveTo.x, coordMoveTo.y, coordMoveTo.z] != null) {
             return false;
         }
 
@@ -86,12 +94,12 @@ public class Game {
 
         for (int e = 0; e < exits.Length; e++) {
             if (exits[e] == 1) {
-                int[] direction = Pipe.directions[e];
-                int[] adjacent = new int[] {coordMoveTo[0] + direction[0], coordMoveTo[1] + direction[1], coordMoveTo[2] + direction[2]};
+                Direction direction = Pipe.directions[e];
+                Position adjacent = new Position (coordMoveTo.x + direction.x, coordMoveTo.y + direction.y, coordMoveTo.z + direction.z);
                 
                 // Check pipe exists here
                 if (ValidCoords(adjacent)) {
-                    Pipe adjpipe = grid[adjacent[0], adjacent[1], adjacent[2]];
+                    Pipe adjpipe = grid[adjacent.x, adjacent.y, adjacent.z];
 
                     if (adjpipe != null && adjpipe.Exits[5 - e] == 1) {
                         foundConnection = true;
@@ -103,27 +111,18 @@ public class Game {
         return foundConnection;
     }
 
-
-
-
-
-
-
-
-
-
-    public bool ValidCoord(int[] coord, int axis) {
-        return coord[axis] >= 0 && coord[axis] < grid.GetLength(axis);
+    public bool ValidCoord(Position coord, Axis axis) {
+        return coord.GetAxis(axis) >= 0 && coord.GetAxis(axis) < grid.GetLength((int) axis);
     }
 
-    public bool ValidCoords(int[] coord) {
-        return ValidCoord(coord, (int) Axis.Xaxis) && ValidCoord(coord, (int) Axis.Yaxis) && ValidCoord(coord, (int) Axis.Zaxis);
+    public bool ValidCoords(Position coord) {
+        return ValidCoord(coord, Axis.Xaxis) && ValidCoord(coord, Axis.Yaxis) && ValidCoord(coord, Axis.Zaxis);
     }
 
-    public bool Select(int[] coords) {
-        if (grid[coords[0], coords[1], coords[2]] != null && !IsSelected()) {
-            this.selected = new Selection (grid[coords[0], coords[1], coords[2]], coords);
-            grid[coords[0], coords[1], coords[2]] = null;
+    public bool Select(Position coords) {
+        if (grid[coords.x, coords.y, coords.z] != null && !IsSelected()) {
+            selected = new Selection (grid[coords.x, coords.y, coords.z], coords);
+            grid[coords.x, coords.y, coords.z] = null;
             return true;
         }
 
@@ -132,9 +131,9 @@ public class Game {
 
     public bool PutBack() {
         if (IsSelected()) {
-            this.selected.Reset();
-            grid[selected.OrigCoords[0], selected.OrigCoords[1], selected.OrigCoords[2]] = selected.GetPipe;
-            this.selected = null;
+            selected.Reset();
+            grid[selected.OrigCoords.x, selected.OrigCoords.y, selected.OrigCoords.z] = selected.GetPipe;
+            selected = null;
             return true;
         }
 
@@ -160,12 +159,12 @@ public class Game {
 public class Selection {
     private Pipe pipe;
     public Pipe GetPipe => pipe;
-    private int[] originalCoordinates;
-    public int[] OrigCoords => originalCoordinates;
+    private Position originalCoordinates;
+    public Position OrigCoords => originalCoordinates;
     private int[] originalExits;
     public int[] OrigExits => originalExits;
 
-    public Selection(Pipe pipe, int[] originalCoordinates) {
+    public Selection(Pipe pipe, Position originalCoordinates) {
         this.pipe = pipe;
         this.originalCoordinates = originalCoordinates;
         originalExits = pipe.Exits;

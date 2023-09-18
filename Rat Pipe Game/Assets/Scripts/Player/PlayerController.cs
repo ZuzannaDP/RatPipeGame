@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float yspeed = 0.002f;
     private float currentxspeed;
     private float currentyspeed;
-    private int[] facingSide;
+    private Direction facingSide;
     private (Vector3 xvector, Vector3 yvector) directionVectors;
     private bool isMoving = false;
 
@@ -30,19 +30,19 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void UpdateDirection(int[] facingSide) {
-        this.facingSide = facingSide;
+    public void UpdateDirection(Direction dir) {
+        facingSide = dir;
 
-        if (facingSide[2] == 1) {
+        if (dir.Equals(Direction.SE)) {
             spriteRenderer.sprite = spriteSE;
             directionVectors = (Vector3.right, Vector3.down);
-        } else if (facingSide[3] == 1) {
+        } else if (dir.Equals(Direction.NW)) {
             spriteRenderer.sprite = spriteNW;
             directionVectors = (Vector3.left, Vector3.up);
-        } else if (facingSide[5] == 1) {
+        } else if (dir.Equals(Direction.NE)) {
             spriteRenderer.sprite = spriteNE;
             directionVectors = (Vector3.right, Vector3.up);
-        } else if (facingSide[0] == 1) {
+        } else if (dir.Equals(Direction.SW)) {
             spriteRenderer.sprite = spriteSW;
             directionVectors = (Vector3.left, Vector3.down);
         }
@@ -76,13 +76,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnTurnLeft(InputAction.CallbackContext context) {
         if (context.started) {
-            UpdateDirection(Pipe.Rotation(facingSide, (int) Axis.Zaxis, -1));
+            UpdateDirection(facingSide.Rotate(Axis.Zaxis, -1));
         }
     }
     
     public void OnTurnRight(InputAction.CallbackContext context) {
         if (context.started) {
-            UpdateDirection(Pipe.Rotation(facingSide, (int) Axis.Zaxis, 1));
+            UpdateDirection(facingSide.Rotate(Axis.Zaxis, 1));
         }
     }
 
@@ -92,9 +92,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (isMoving) {
-            transform.position += directionVectors.xvector * currentxspeed;
-            transform.position += directionVectors.yvector * currentyspeed;
-            gameController.MoveRat(transform.position);
+            Vector3 newPosition = transform.position;
+            newPosition += directionVectors.xvector * currentxspeed;
+            newPosition += directionVectors.yvector * currentyspeed;
+
+            if (gameController.MoveRat(newPosition)) {
+                transform.position = newPosition;
+            };
         }
     }
 }

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName="Level", menuName = "ScriptableObjects/LevelData")]
 public class LevelData : ScriptableObject

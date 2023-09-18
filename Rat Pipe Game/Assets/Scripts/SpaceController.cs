@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class SpaceController : MonoBehaviour, Clickable {
     private SpriteRenderer spriteRenderer;

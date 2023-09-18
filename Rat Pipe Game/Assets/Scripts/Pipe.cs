@@ -1,5 +1,3 @@
-using UnityEngine;
-using System.Collections;
 
 public class Pipe {
     public static int[] zaxis = new int[] {1, 4, 6, 3};

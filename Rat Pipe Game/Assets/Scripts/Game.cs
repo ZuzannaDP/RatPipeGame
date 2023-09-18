@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Collections;
-
 /// <summary>
 /// All gameplay logic (seperate from UI).
 /// </summary> 

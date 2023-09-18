@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.Rendering;
 using System;
 using System.Linq;
-using UnityEngine.InputSystem;
 
 public class Tests : MonoBehaviour
 {

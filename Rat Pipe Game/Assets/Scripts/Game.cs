@@ -143,6 +143,10 @@ public class Game {
     }
 
     public bool Select(Position coords) {
+        if (player.position.Equals(coords)) {
+            return false;
+        }
+
         if (grid[coords.x, coords.y, coords.z] != null && !IsSelected()) {
             selected = new Selection (grid[coords.x, coords.y, coords.z], coords);
             grid[coords.x, coords.y, coords.z] = null;

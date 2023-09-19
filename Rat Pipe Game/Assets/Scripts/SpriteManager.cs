@@ -6,6 +6,9 @@ public static class SpriteManager
     private static Dictionary<string, Sprite> pipeSprites = null;
     public static Dictionary<string, Sprite> PipeSprites => pipeSprites;
 
+    private static Dictionary<string, Sprite> indicatorSprites = null;
+    public static Dictionary<string, Sprite> IndicatorSprites => indicatorSprites;
+
     public static void LoadSprites() {
         if(pipeSprites != null) {
             return;
@@ -31,6 +34,20 @@ public static class SpriteManager
         pipeSprites.Add("1,0,0,0,1,0", sprites[13]);
         pipeSprites.Add("0,0,1,0,1,0", sprites[14]);
 
+        if(indicatorSprites != null) {
+            return;
+        }
+
+        indicatorSprites = new Dictionary<string, Sprite>();
+        
+        sprites = Resources.LoadAll<Sprite>("Indicators");
+
+        indicatorSprites.Add("0,-1,0", sprites[0]);
+        indicatorSprites.Add("0,0,-1", sprites[1]);
+        indicatorSprites.Add("1,0,0", sprites[2]);
+        indicatorSprites.Add("-1,0,0", sprites[3]);
+        indicatorSprites.Add("0,1,0", sprites[4]);
+        indicatorSprites.Add("0,0,1", sprites[5]);
 
         // pipeSprites
         // pipeSprites.Add(new int[] {0,1,0,0,1,0}, sprites[0]);

@@ -1463,6 +1463,7 @@ MonoBehaviour:
   pipePrefab: {fileID: 9103712463229916110, guid: bbde1fd8d83120c4b854efab534472e4, type: 3}
   spacePrefab: {fileID: 6089072942644895970, guid: 8d07e1284c05e7849833191f8be3ace0, type: 3}
   layerPrefab: {fileID: 2328345465562967547, guid: 29a4c416bee0faa4eb6214697cdf5d59, type: 3}
+  indicatorPrefab: {fileID: 6220136387796057195, guid: 86b6de8825a586d468e05e9450b6a991, type: 3}
   playerObject: {fileID: 1303858427}
   cursor: {fileID: 631305030}
 --- !u!4 &2124127625

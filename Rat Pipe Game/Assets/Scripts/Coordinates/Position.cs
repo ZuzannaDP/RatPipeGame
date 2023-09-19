@@ -23,8 +23,12 @@ public class Position
         return null;
     }
 
-    private Direction GetDirection(Position pos2) {
+    public Direction GetDirection(Position pos2) {
         return new Direction (pos2.x - x, pos2.y - y, pos2.z - z);
+    }
+
+    public Position GetPosition(Direction dir) {
+        return new Position (x + dir.x, y + dir.y, z + dir.z);
     }
 
     public int GetLevel() {
@@ -66,15 +70,15 @@ public class Position
         return new Vector3 (xCoord, yCoord, zCoord);
     }
 
-    public static Position IsometricPosition(Vector3 pos) {
-        float newX = pos.x - (2 * pos.y);
+    public static Position IsometricPosition(Vector3 pos, int zLayer) {
+        float newX = pos.x - 2 * pos.y + zLayer;
         int xCoord = (int) Math.Round(newX);
-        int yCoord = (int) Math.Round(4 * pos.y + newX);
-        int zCoord = (int) pos.z;
+        int yCoord = (int) Math.Round(4 * pos.y + newX - 2 * zLayer);
+        int zCoord = zLayer;
         return new Position (xCoord, yCoord, zCoord);
     }
 
     public string Print() {
-        return x + ", " + y + ", " + z;
+        return x + "," + y + "," + z;
     }
 }

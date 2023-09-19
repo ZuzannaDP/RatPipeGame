@@ -120,6 +120,11 @@ public class PlayerController : MonoBehaviour
 
             if (gameController.MoveRat(newPosition)) {
                 transform.position = newPosition;
+
+                // Check won
+                if (gameController.HasPlayerWon()) {
+                    gameController.PlayerWon();
+                };
             };
         }
     }

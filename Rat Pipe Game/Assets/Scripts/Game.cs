@@ -10,16 +10,39 @@ public class Game {
     public string Name => name;
     private Selection selected = null;
     public Selection Selected => selected;
+    private Direction startPointExitDir;
+    public Direction StartPointExitDir => startPointExitDir;
+    private Direction endPointExitDir;
+    public Direction EndPointExitDir => endPointExitDir;
     private Position startPoint;
+    public Position StartPoint => startPoint;
     private Position endPoint;
+    public Position EndPoint => endPoint;
     private Player player;
     public Player GetPlayer => player;
 
-    public Game(Pipe[,,] grid, Position startPoint, Position endPoint, Direction dir) {
+    public Game(Pipe[,,] grid, Position startPoint, Position endPoint, Direction dir, Direction endPointExitDir, Direction startPointExitDir) {
         this.grid = grid;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.endPointExitDir = endPointExitDir;
+        this.startPointExitDir = startPointExitDir;
         player = new Player(startPoint, dir);
+    }
+ 
+    /// <summary>
+    /// Checks if the player has won.
+    /// </summary>
+    /// <returns>True if the player has won.</returns>
+    public bool HasWon() {
+        // Player is at the end position
+        // And the pipe has an exit in the correct direction
+        if (player.position.Equals(endPoint) &&
+            grid[endPoint.x, endPoint.y, endPoint.z].HasExit(endPointExitDir)) {
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -27,8 +50,11 @@ public class Game {
     /// space and the pipe in the curent space connects.
     /// </summary>
     /// <param name="newPos"></param>
-    /// <returns></returns>
+    /// <returns>True if the player moved.</returns>
     public bool MovePlayer(Position newPos) {
+        Debug.Log("current position: " + player.position.Print());
+        Debug.Log("new position: " + newPos.Print());
+
         // Check Player is already in this position
         if (player.position.Equals(newPos)) {
             Debug.Log("Already here");
@@ -50,8 +76,6 @@ public class Game {
 
         // Check pipe is adjacent
         Direction pipeDir = player.position.Adjacent(newPos);
-        Debug.Log("current position: " + player.position.Print());
-        Debug.Log("new position: " + newPos.Print());
         if (pipeDir == null) {
             Debug.Log("Pipe is not adjacent!");
             return false;

@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using System;
 using System.Linq;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviour
     public GameObject pipePrefab;
     public GameObject spacePrefab;
     public GameObject layerPrefab;
+    public GameObject indicatorPrefab;
 
     // Player
     [SerializeField]
@@ -62,7 +64,7 @@ public class GameController : MonoBehaviour
     /// Display the grid in isometric coordinates.
     /// </summary>
     public void DisplayGame() {
-    pipeGrid = new PipeController[game.Grid.GetLength(0),game.Grid.GetLength(1),game.Grid.GetLength(2)];
+        pipeGrid = new PipeController[game.Grid.GetLength(0),game.Grid.GetLength(1),game.Grid.GetLength(2)];
 
         for (int x = 0; x < game.Grid.GetLength(0); x++) {
             for (int y = 0; y < game.Grid.GetLength(1); y++) {
@@ -75,6 +77,13 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+
+        // Add start and end indicators
+        Vector3 startPos = Position.WorldPosition(game.StartPoint.GetPosition(game.StartPointExitDir));
+        CreateIndicator(startPos, game.StartPoint, game.StartPointExitDir.Opposite());
+
+        Vector3 endPos = Position.WorldPosition(game.EndPoint.GetPosition(game.EndPointExitDir));
+        CreateIndicator(endPos, game.EndPoint, game.EndPointExitDir.Opposite());
     }
 
     public void DisplaySpaces() {
@@ -144,8 +153,17 @@ public class GameController : MonoBehaviour
         
     }
 
+    public void CreateIndicator(Vector3 vecpos, Position pos, Direction dir) {
+        GameObject newStartIndicator = Instantiate(indicatorPrefab);
+        newStartIndicator.transform.SetParent(transform, false);
+        newStartIndicator.transform.position = newStartIndicator.transform.position + vecpos;
+
+        newStartIndicator.GetComponent<SortingGroup>().sortingOrder = pos.z;
+        newStartIndicator.GetComponent<SpriteRenderer>().sprite = SpriteManager.IndicatorSprites[dir.Print()];
+    }
+
     public bool MoveRat(Vector3 vecPos) {
-        return game.MovePlayer(Position.IsometricPosition(vecPos));
+        return game.MovePlayer(Position.IsometricPosition(vecPos, game.GetPlayer.position.z));
     }
 
     public bool JumpRat() {
@@ -158,6 +176,14 @@ public class GameController : MonoBehaviour
 
     public Position GetPlayerPosition() {
         return game.GetPlayer.position;
+    }
+
+    public bool HasPlayerWon() {
+        return game.HasWon();
+    }
+
+    public void PlayerWon() {
+        SceneManager.LoadScene("Won");
     }
 
 

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6018d7fa0adf2834cae60815ba8372cd, type: 3}
   m_Name: Corner_4-5
   m_EditorClassIdentifier: 
-  exits: 
+  exits: 000000000000000000000000010000000100000000000000
   movable: 0

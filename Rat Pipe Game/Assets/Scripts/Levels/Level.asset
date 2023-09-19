@@ -16,21 +16,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 959f49f043c9e75409490c2ec9f2d110, type: 2}
   - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
   - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 5d5a96fd1402c5a4caa7f8d092ea390b, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 2da21ac09104d8d4da876eab0566bf30, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 854c0714a57902046af39c36644e72d6, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
+  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
   - {fileID: 11400000, guid: 959f49f043c9e75409490c2ec9f2d110, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: a6b1e13b562a09740a14ef2725353da6, type: 2}
-  - {fileID: 11400000, guid: 7ad365f6baf850943a10fd144cf1522d, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
-  - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
   - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
   - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
   - {fileID: 11400000, guid: 77ae4f4b46b1da74fad3b2c598e44e27, type: 2}
@@ -45,5 +45,7 @@ MonoBehaviour:
   height: 3
   name: The first level
   startPoint: 000000000000000000000000
-  endPoint: 000000000200000002000000
+  endPoint: 010000000200000002000000
+  startPointExitDirection: 00000000ffffffff00000000
+  endPointExitDirection: 000000000100000000000000
   startingDirection: 000000000100000000000000

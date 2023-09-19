@@ -31,7 +31,9 @@ public static class LevelManager
             grid, 
             new Position(levelData.startPoint[0], levelData.startPoint[1], levelData.startPoint[2]), 
             new Position(levelData.endPoint[0], levelData.endPoint[1], levelData.endPoint[2]), 
-            new Direction(levelData.startingDirection[0], levelData.startingDirection[1], levelData.startingDirection[2])
+            new Direction(levelData.startingDirection[0], levelData.startingDirection[1], levelData.startingDirection[2]),
+            new Direction(levelData.endPointExitDirection[0], levelData.endPointExitDirection[1], levelData.endPointExitDirection[2]),
+            new Direction(levelData.startPointExitDirection[0], levelData.startPointExitDirection[1], levelData.startPointExitDirection[2])
         );
 
         return game;

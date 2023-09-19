@@ -54,7 +54,7 @@ public class Direction {
     }
 
     public string Print() {
-        return x + ", " + y + ", " + z;
+        return x + "," + y + "," + z;
     }
 
     public Direction Opposite() {

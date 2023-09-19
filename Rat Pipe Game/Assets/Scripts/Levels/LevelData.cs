@@ -10,6 +10,7 @@ public class LevelData : ScriptableObject
     public string name;
     public int[] startPoint;
     public int[] endPoint;
+    public int[] startPointExitDirection;
     public int[] endPointExitDirection;
     public int[] startingDirection;
 }
